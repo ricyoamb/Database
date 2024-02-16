@@ -1,0 +1,42 @@
+1. Membuat Database
+	CREATE DATABASE homework_week6;
+
+2. Gunakan Database
+	\c homework_week6;
+
+3. Membuat tabel kategori barang dan tabel barang
+	a. tabel kategori barang
+		CREATE TABLE itemcategories (id SERIAL PRIMARY KEY, name VARCHAR NOT NULL, description TEXT NOT NULL);
+	b. tabel barang
+		CREATE TABLE items (id SERIAL PRIMARY KEY, name VARCHAR NOT NULL, price INTEGER NOT NULL, description TEXT NOT NULL, stock INTEGER NOT NULL, category_id INTEGER REFERENCES itemcategories(id));
+
+4. Membuat query CRUD pada tabel kategori barang dan tabel barang		
+	a. tabel kategori barang
+		i.   Insert
+				INSERT INTO itemcategories (name, description) VALUES ('Makanan','kategori untuk produk makanan'),('Minuman','kategori untuk produk minuman'),('etc','Dan lain lain');
+		ii.  Select
+				SELECT * FROM itemcategories;
+		iii. Update
+				UPDATE itemcategories SET name = 'food' WHERE id = 1;
+		iv.  Delete
+				DELETE FROM itemcategories WHERE id = 3;
+				
+	b. tabel barang
+		i.   Insert
+				INSERT INTO items (name, price, description, stock, category_id) VALUES ('Soto Ayam',15000,'Soto Ayam Khas Lamongan',30,1),('Pecel Lele',13000,'Pecel Lele Khas Lamongan',65,1),(‘Ayam Bakar’,10000,’Ayam Bakar Khas Wamena’,70,1),(‘Nasi Goreng Seafood’, 20000,’Nasi Goreng + Udang + Cumi + Bakso Ikan’,50,1),(‘Gurame Terbang’,30000,’Gurame yang digoreng kremes’,10,1),('Es Jeruk',7000,'Jeruk Peras Pakai Es',40,2),('Es Teh',5000,'Teh Poci Pakai Es',40,2),(‘Es Campur’,13000,’Es dengan Campuran Buah dan Agar-Agar’,20,2),(‘Air Mineral’,4000,’Air Mineral  Asli Pegunungan,50,2),(‘Kopi Hitam’,10000,’Kopi Khas Gayo’,40,2);
+		ii.  Select
+				SELECT * FROM items;
+		iii. Update
+				UPDATE items SET stock = 15 WHERE id = 1;
+		iv.  Delete
+				DELETE FROM items WHERE id = 9;
+
+5.	Membuat query join relasi antara tabel kategori barang dan tabel barang
+	 SELECT * FROM items i JOIN itemCategories ic ON i.category_id = ic.id;
+	 
+
+
+CHALLENGE PAGINATION
+	SELECT * FROM items ORDER BY name ASC LIMIT 5 OFFSET 0; --page 1
+	SELECT * FROM items ORDER BY name ASC LIMIT 5 OFFSET 5; --page 2
+
